@@ -49,7 +49,7 @@ class Parameters:
 
     def update_params(self, update_info):
         for grad in update_info:
-            if len(grad[2]) == 1:
-                self.params[grad[1]][grad[2][0]] += grad[0] * grad[3]
-            else:
-                self.params[grad[1]][grad[2][0]][grad[2][1]] += grad[0] * grad[3]
+            val = self.params[grad[1]]
+            for l in grad[2]:
+                val = val[l]
+            val += grad[0]*grad[3]

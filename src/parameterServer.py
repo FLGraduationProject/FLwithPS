@@ -12,4 +12,4 @@ class parameterServer():
         print("------------------server updating------------------")
         for info in self.update_infos:
             self.globalParams.update_params(info)
-        self.update_info = []
+        self.update_infos = []
