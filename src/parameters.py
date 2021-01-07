@@ -1,4 +1,5 @@
 import heapq
+import torch
 
 
 def tensor_find(tensor, tensorSize, index):
@@ -14,6 +15,7 @@ def tensor_find(tensor, tensorSize, index):
         val = val[l]
 
     return val, loc
+
 
 def plus_minus(x):
   return 1 if x > 0 else -1
@@ -47,9 +49,15 @@ class Parameters:
     def __init__(self, params):
         self.params = params
 
-    def update_params(self, update_info):
-        for grad in update_info:
-            val = self.params[grad[1]]
-            for l in grad[2]:
-                val = val[l]
-            val += grad[0]*grad[3]
+
+    def update_params(self, update_info, DSSGD=False, fedAvg=False):
+        if DSSGD:
+            for grad in update_info:
+                val = self.params[grad[1]]
+                for l in grad[2]:
+                    val = val[l]
+                val += grad[0]*grad[3]
+        elif fedAvg:
+            length = len(update_info)
+            average = {key: torch.sum(torch.stack([info[key] for info in update_info], dim=1), 1)/length for key in update_info[0].keys()}
+            self.params = average

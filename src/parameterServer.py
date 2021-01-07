@@ -8,8 +8,12 @@ class parameterServer():
     def upload(self, update_info):
         self.update_infos.append(update_info)
 
-    def update(self):
+    def update(self, DSSGD=False, fedAvg=False):
         print("------------------server updating------------------")
-        for info in self.update_infos:
-            self.globalParams.update_params(info)
+        if DSSGD:
+            for info in self.update_infos:
+                self.globalParams.update_params(info, DSSGD=True)
+        elif fedAvg:
+            self.globalParams.update_params(self.update_infos, fedAvg=True)
+
         self.update_infos = []
