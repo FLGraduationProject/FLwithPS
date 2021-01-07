@@ -81,5 +81,3 @@ if __name__ == "__main__":
 
         # Test global model
         test.test(opt.batch_size, server.globalParams.params)
-
-
