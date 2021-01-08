@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
     opt = parser.parse_args()
 
-    train_loader = dl.divideData2Participants(opt.local_data_ratio, opt.n_participants, opt.batch_size)
+    train_loader = dl.divideData2Participants(opt.local_data_ratio, opt.n_participants, opt.batch_size, eq_IID=True)
 
     initialmodel = opt.model_type()
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
             participants[participant_num].download_params()
             participants[participant_num].train_upload(opt.n_local_epochs, fedAvg=True)
 
-        server.update(fedAvg=True)
+        server.update(fedAvg=True, weighted_avg=False)
 
         print('---------------------------------------------------round over')
 

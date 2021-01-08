@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     opt = parser.parse_args()
 
-    train_loader = dl.divideData2Participants(opt.local_data_ratio, opt.n_participants, opt.batch_size)
+    train_loader = dl.divideData2Participants(opt.local_data_ratio, opt.n_participants, opt.batch_size, eq_IID=True)
 
     initialmodel = opt.model_type()
 
